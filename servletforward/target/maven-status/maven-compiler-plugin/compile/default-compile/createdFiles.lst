@@ -1,0 +1,6 @@
+com\kg\usermgmt\Contact.class
+com\kg\usermgmt\LoginServlet.class
+com\kg\database\Dataaccess.class
+com\kg\usermgmt\UserController.class
+com\kg\database\Databaseconnectivity.class
+com\kg\usermgmt\User.class

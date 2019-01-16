@@ -1,0 +1,176 @@
+package com.kg.usermgmt;
+
+import java.io.IOException;
+import java.sql.SQLException;
+import java.util.ArrayList;
+
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+// import com.kg.usermgmty.Inbox;
+
+// import com.kg.usermgmty.Inbox;
+
+@WebServlet("/InboxController")
+public class InboxController extends HttpServlet {
+
+    ArrayList<Inbox> userList2 = new ArrayList<Inbox>();
+    private String mode = "";
+	public ArrayList<Contact> userList1;
+
+    @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) {
+        String forward = "";
+        String action = req.getParameter("action");
+        System.out.println(action);
+        try {
+            switch (action) {
+            case "delete":
+                deleteUser(req, resp);
+                break;
+
+            case "edit":
+                // System.out.println("case= edit");
+                showEditForm(req, resp);
+                break;
+
+            case "insert":
+                showAddForm(req, resp);
+                break;
+
+            case "saveorupdate":
+                saveorupdateUser(req, resp);
+                break;
+            
+            default:
+                listUser(req, resp);
+                break;
+            }
+        } catch (ServletException | IOException e) {
+
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        doGet(req, resp);
+    }
+
+    private void listUser(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        // userList.add(new Inbox(1, "10/11/1996", "ara", "to1", "subject1", "message1"));
+        // userList.add(new Inbox(1, "date11", "from11", "to11", "subject11", "message11"));
+        // userList.add(new Inbox(2, "date2", "from2", "to2", "subject2", "message2"));
+    
+
+        req.setAttribute("userList", userList2);
+        RequestDispatcher view = req.getRequestDispatcher("inboxlist.jsp");
+        view.forward(req, resp);
+    }
+
+    private void showAddForm(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        System.out.println("showAddForm called");
+        RequestDispatcher view = req.getRequestDispatcher("inboxnew.jsp");
+        view.forward(req, resp);
+
+    }
+
+    private void showEditForm(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        System.out.println("showEditForm called");
+        mode = "update";
+        int userid = Integer.parseInt(req.getParameter("userid"));
+        System.out.println(userid);
+
+        Inbox updateUser = new Inbox();
+
+        for (Inbox user : userList2) {
+            if (user.getUserid() == userid) {
+                updateUser = user;
+                break;
+            }
+
+        }
+        req.setAttribute("user", updateUser);
+        RequestDispatcher view = req.getRequestDispatcher("inboxnew.jsp");
+        view.forward(req, resp);
+    }
+
+    private void saveorupdateUser(HttpServletRequest req, HttpServletResponse resp)
+            throws ServletException, IOException {
+        System.out.println("saveorupdateUser called");
+
+        if (mode != "update") {
+
+            int userid = Integer.parseInt(req.getParameter("userid"));
+            String date = req.getParameter("date");
+            String from = req.getParameter("from");
+            String to = req.getParameter("to");
+            String subject = req.getParameter("subject");
+            String message = req.getParameter("message");
+            
+            
+            
+            
+            // for (Contact user : userList) {
+                // if(user.getUserid()!=userid)
+                // {
+                Inbox newUser = new Inbox(userid,date,from,to,subject,message);
+                userList2.add(newUser);
+               req.setAttribute("userList", userList2);
+                // }
+                
+            // }
+                  // req.setAttribute("userList", userList);
+        } else {
+            System.out.println("edit user called arraylist to be updated here");
+
+            int userid = Integer.parseInt(req.getParameter("userid"));
+            System.out.println(userid);
+            String date= req.getParameter("date");
+            String from= req.getParameter("from");
+            String to= req.getParameter("to");
+            String subject= req.getParameter("subject");
+            String message= req.getParameter("message");
+            
+            
+            
+           Inbox  updateUser = new Inbox(userid,date,from,to,subject,message);
+
+            for (Inbox user : userList2) {
+                if (user.getUserid() == userid) {
+                    userList2.set(userList2.indexOf(user), updateUser);
+                    break;
+                }
+
+            }
+
+        }
+
+        req.setAttribute("userList", userList2);
+        RequestDispatcher view = req.getRequestDispatcher("inboxlist.jsp");
+        view.forward(req, resp);
+
+    }
+
+    private void deleteUser(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        int userid = Integer.parseInt(req.getParameter("userid"));
+            for (Inbox user : userList2) {
+            if (user.getUserid() == userid) {
+
+                System.out.println(user);
+                userList2.remove(userList2.indexOf(user));
+                break;
+            }
+
+        }
+
+        req.setAttribute("userList", userList2);
+        RequestDispatcher view = req.getRequestDispatcher("inboxlist.jsp");
+        view.forward(req, resp);
+    }
+
+}

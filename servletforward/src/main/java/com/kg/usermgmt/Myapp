@@ -1,0 +1,70 @@
+package com.kg.usermgmt;
+
+/**
+ * Inbox
+ */
+public class Myapp {
+
+    
+    private String email;
+    private String password;
+    private int userid;
+
+    Myapp() {
+    }
+
+    Myapp( String email, String password) {
+       
+        this.email = email;
+        this.password = password;
+    }
+
+    /**
+     * @return the userid
+     */
+    public String getEmail() {
+        return email;
+    }
+
+    /**
+     * @param userid the userid to set
+     */
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    
+
+ 
+
+    /**
+     * @return the from
+     */
+    public String getPassword() {
+        return password;
+    }
+
+    /**
+     * @param from the from to set
+     */
+    public void setPassword(String password) {
+        this.password =password;
+    }
+
+    /**
+     * @return the to
+     */
+  
+    
+
+    
+
+    
+
+   
+
+    @Override
+    public String toString() {
+        return "email"+email + ", password"+password;
+    }
+}

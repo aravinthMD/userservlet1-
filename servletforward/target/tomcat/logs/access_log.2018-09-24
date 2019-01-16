@@ -1,0 +1,4 @@
+0:0:0:0:0:0:0:1 - - [24/Sep/2018:18:33:12 +0530] "GET / HTTP/1.1" 200 921 http-bio-9090-exec-1 1012
+0:0:0:0:0:0:0:1 - - [24/Sep/2018:18:33:12 +0530] "GET /main.css HTTP/1.1" 404 967 http-bio-9090-exec-3 3
+0:0:0:0:0:0:0:1 - - [24/Sep/2018:18:33:12 +0530] "GET /main.js HTTP/1.1" 404 965 http-bio-9090-exec-2 2
+0:0:0:0:0:0:0:1 - - [24/Sep/2018:18:33:19 +0530] "GET /database?id=1&name=manoj&department=ece&age=582 HTTP/1.1" 200 649 http-bio-9090-exec-6 333
